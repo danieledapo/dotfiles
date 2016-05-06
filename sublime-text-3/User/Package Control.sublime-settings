@@ -1,0 +1,19 @@
+{
+	"bootstrapped": true,
+	"in_process_packages":
+	[
+	],
+	"installed_packages":
+	[
+		"All Autocomplete",
+		"GitGutter",
+		"GoSublime",
+		"Package Control",
+		"Pylinter",
+		"Python 3",
+		"PyYapf Python Formatter",
+		"Rust",
+		"SideBarEnhancements",
+		"Theme - Soda"
+	]
+}
