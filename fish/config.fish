@@ -14,8 +14,8 @@ set -x PATH "$GOPATH/bin" "$HOME/.local/bin" $PATH
 #
 # Autojump
 #
-if test -f /home/daniele/.autojump/share/autojump/autojump.fish
-    . /home/daniele/.autojump/share/autojump/autojump.fish
+if test -f $HOME/.autojump/share/autojump/autojump.fish
+    . $HOME/.autojump/share/autojump/autojump.fish
 end
 
 #
@@ -26,6 +26,7 @@ eval (python -m virtualfish auto_activation)
 #
 # Direnv
 #
-if test -x "/usr/local/bin/direnv"
+echo "ciao"
+if test -x $HOME/.local/bin/direnv
     eval (direnv hook fish)
 end
