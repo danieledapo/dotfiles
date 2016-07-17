@@ -94,6 +94,7 @@ Plug 'tpope/vim-commentary'
 Plug 'godlygeek/tabular'
 Plug 'michaeljsmith/vim-indent-object'
 Plug 'easymotion/vim-easymotion'
+Plug 'jiangmiao/auto-pairs'
 
 " Python
 Plug 'davidhalter/jedi-vim'
