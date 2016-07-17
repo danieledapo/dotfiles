@@ -19,6 +19,8 @@ MANIFEST = {
          "dest": "~/.ipython"},
         {"source": "misc",
          "dest": "~/"},
+        {"source": "~/.vimrc",
+         "dest": "~/.config/nvim/init.vim"},
     ],
     "darwin": [
         {"source": "sublime-text-3",
