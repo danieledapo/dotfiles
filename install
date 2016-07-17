@@ -64,6 +64,10 @@ BINARY_MANIFEST = [
         'cmd': ['pip', 'install', '--user', 'jedi'],
     },
     {
+        'name': 'pylint',
+        'cmd': ['pip', 'install', '--user', 'pylint'],
+    },
+    {
         'name': 'autojump',
         'src': 'fish/autojump',
         'cmd': ['./install.py'],
