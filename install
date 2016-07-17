@@ -55,6 +55,14 @@ BINARY_MANIFEST = [
         'cmd': ['pip', 'install', '--user', 'ipython'],
     },
     {
+        'name': 'neovim',
+        'cmd': ['pip', 'install', '--user', 'neovim'],
+    },
+    {
+        'name': 'jedi',
+        'cmd': ['pip', 'install', '--user', 'jedi'],
+    },
+    {
         'name': 'autojump',
         'src': 'fish/autojump',
         'cmd': ['./install.py'],
@@ -77,6 +85,10 @@ def main():
 
     for platform in platforms():
         process_entries(MANIFEST[platform])
+
+    for vim in ['nvim', 'vim']:
+        # I don't know why but vim exits with a status code != 0...
+        subprocess.call([vim, '-E', '+PlugUpgrade', '+PlugUpdate', '+PlugClean!', '+qall'])
 
 
 def install_binaries():
