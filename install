@@ -2,6 +2,7 @@
 
 from __future__ import print_function
 
+import argparse
 import contextlib
 import os
 import os.path
@@ -79,9 +80,12 @@ BINARY_MANIFEST = [
 
 
 def main():
+    args = parse_args()
+
     run('git', 'submodule', 'foreach', 'git', 'pull', 'origin', 'master')
 
-    install_binaries()
+    if args.binaries:
+        install_binaries()
 
     for platform in platforms():
         process_entries(MANIFEST[platform])
@@ -145,6 +149,14 @@ def symlink(source, dest):
         os.unlink(dest)
 
     os.symlink(source, dest)
+
+
+def parse_args():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--no-binaries', dest='binaries', default=True, action='store_false',
+                        help='do not install binaries')
+
+    return parser.parse_args()
 
 
 @contextlib.contextmanager
