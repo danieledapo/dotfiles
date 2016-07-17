@@ -18,6 +18,8 @@ MANIFEST = {
          "dest": "~/.config/fish"},
         {"source": "ipython",
          "dest": "~/.ipython"},
+        {"source": os.path.join("py", "yapf", "style"),
+         "dest": "~/.config/yapf/style"},
         {"source": "misc",
          "dest": "~/"},
         {"source": "~/.vimrc",
@@ -68,6 +70,10 @@ BINARY_MANIFEST = [
         'cmd': ['pip', 'install', '--user', 'pylint'],
     },
     {
+        'name': 'yapf',
+        'cmd': ['pip', 'install', '--user', 'yapf'],
+    },
+    {
         'name': 'autojump',
         'src': 'fish/autojump',
         'cmd': ['./install.py'],
@@ -96,7 +102,8 @@ def main():
 
     for vim in ['nvim', 'vim']:
         # I don't know why but vim exits with a status code != 0...
-        subprocess.call([vim, '-E', '+PlugUpgrade', '+PlugUpdate', '+PlugClean!', '+qall'])
+        subprocess.call([vim, '-E', '+PlugUpgrade', '+PlugUpdate',
+                         '+PlugClean!', '+qall'])
 
 
 def install_binaries():
@@ -157,7 +164,10 @@ def symlink(source, dest):
 
 def parse_args():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--no-binaries', dest='binaries', default=True, action='store_false',
+    parser.add_argument('--no-binaries',
+                        dest='binaries',
+                        default=True,
+                        action='store_false',
                         help='do not install binaries')
 
     return parser.parse_args()
