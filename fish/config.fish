@@ -26,7 +26,6 @@ eval (python -m virtualfish auto_activation)
 #
 # Direnv
 #
-echo "ciao"
 if test -x $HOME/.local/bin/direnv
     eval (direnv hook fish)
 end
