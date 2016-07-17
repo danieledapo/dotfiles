@@ -88,6 +88,7 @@ Plug 'ctrlpvim/ctrlp.vim'
 Plug 'majutsushi/tagbar'
 
 " Text manipulation
+Plug 'scrooloose/syntastic'
 Plug 'vim-scripts/Align'
 Plug 'simnalamburt/vim-mundo'
 Plug 'tpope/vim-commentary'
