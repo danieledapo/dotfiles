@@ -9,7 +9,7 @@
 set -x EDITOR "vim"
 set -x GOPATH "$HOME/dev/go"
 
-set -x PATH "$GOPATH/bin" "$HOME/.local/bin" $PATH
+set -x PATH "$GOPATH/bin" "$HOME/.local/bin" "$HOME/.cargo/bin" $PATH
 
 #
 # Autojump
@@ -29,3 +29,14 @@ eval (python -m virtualfish auto_activation)
 if test -x $HOME/.local/bin/direnv
     eval (direnv hook fish)
 end
+
+
+#
+# Install fundle
+#
+if not functions -q fundle; eval (curl -sfL https://git.io/fundle-install); end
+
+#
+# Fish completions
+#
+fundle plugin 'brgmnn/fish-docker-compose'
