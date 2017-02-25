@@ -13,9 +13,9 @@ chsh -s /usr/bin/fish
 mkdir -p ~/.config/fish
 ln -s `pwd`/fish/config.fish ~/.config/fish/config.fish || true
 
-curl -L http://get.oh-my.fish | fish
+# curl -L http://get.oh-my.fish | fish
 
-omf theme fisk
+# omf theme fisk
 
 
 # Python
@@ -23,7 +23,8 @@ sudo dnf install -y python python3 ipython
 
 pip install --user virtualfish
 mkdir -p ~/.ipython/profile_default/startup
-ln -s `pwd`/ipython/profile_default/startup/00-autoreload.ipy ~/ipython/profile_default/startup/00-autoreload.ipy
+ln -s `pwd`/ipython/profile_default/startup/00-autoreload.ipy ~/ipython/profile_default/startup/00-autoreload.ipy || true
+
 
 # NeoVim
 sudo dnf install -y neovim
@@ -40,6 +41,11 @@ sudo dnf install -y direnv
 # Rust
 curl https://sh.rustup.rs -sSf | sh
 rustup update
+
+
+# Code
+mkdir -p ~/.config/Code/User
+ln -s `pwd`/code/keybindings.json ~/.config/Code/User/keybindings.json || true
 
 
 echo "Please reboot..."
