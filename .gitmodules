@@ -1,3 +1,0 @@
-[submodule "fish/autojump"]
-	path = fish/autojump
-	url = https://github.com/wting/autojump

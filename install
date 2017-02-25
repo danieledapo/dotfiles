@@ -1,201 +1,45 @@
-#!/usr/bin/env python
-
-from __future__ import print_function
-
-import argparse
-import contextlib
-import os
-import os.path
-import subprocess
-import sys
-import tempfile
-
-HERE = os.path.dirname(os.path.abspath(__file__))
-
-MANIFEST = {
-    "unix": [
-        {"source": "fish",
-         "dest": "~/.config/fish"},
-        {"source": "ipython",
-         "dest": "~/.ipython"},
-        {"source": os.path.join("py", "yapf", "style"),
-         "dest": "~/.config/yapf/style"},
-        {"source": "misc",
-         "dest": "~/"},
-        {"source": "~/.vimrc",
-         "dest": "~/.config/nvim/init.vim"},
-    ],
-    "darwin": [
-        {"source": "sublime-text-3",
-         "dest": "~/Library/Application Support/Sublime Text 3"},
-    ],
-    "linux2": [
-        {"source": "sublime-text-3",
-         "dest": "~/.config/sublime-text-3"},
-    ],
-}
+#!/usr/bin/env bash
 
 
-def install_direnv():
-    try:
-        run('go', 'version')
-
-    except subprocess.CalledProcessError:
-        print('Go is not installed, skipping direnv...')
-
-        return
-
-    with cd(tempfile.gettempdir()):
-        run('git', 'clone', 'https://github.com/direnv/direnv')
-
-        with cd('direnv'):
-            run('make', 'install', 'DESTDIR=~/.local/')
+set -euox pipefail
 
 
-BINARY_MANIFEST = [
-    {
-        'name': 'ipython',
-        'cmd': ['pip', 'install', '--user', 'ipython'],
-    },
-    {
-        'name': 'neovim',
-        'cmd': ['pip', 'install', '--user', 'neovim'],
-    },
-    {
-        'name': 'jedi',
-        'cmd': ['pip', 'install', '--user', 'jedi'],
-    },
-    {
-        'name': 'pylint',
-        'cmd': ['pip', 'install', '--user', 'pylint'],
-    },
-    {
-        'name': 'yapf',
-        'cmd': ['pip', 'install', '--user', 'yapf'],
-    },
-    {
-        'name': 'autojump',
-        'src': 'fish/autojump',
-        'cmd': ['./install.py'],
-    },
-    {
-        'name': 'virtualfish',
-        'cmd': ['pip', 'install', '--user', 'virtualfish'],
-    },
-    {
-        'name': 'direnv',
-        'cmd': install_direnv,
-    },
-]
+# Fish
+sudo dnf config-manager --add-repo http://download.opensuse.org/repositories/shells:fish:release:2/Fedora_25/shells:fish:release:2.repo
+sudo dnf install -y fish
+
+chsh -s /usr/bin/fish
+
+mkdir -p ~/.config/fish
+ln -s `pwd`/fish/config.fish ~/.config/fish/config.fish || true
+
+curl -L http://get.oh-my.fish | fish
+
+omf theme fisk
 
 
-def main():
-    args = parse_args()
+# Python
+sudo dnf install -y python python3 ipython
 
-    run('git', 'submodule', 'foreach', 'git', 'pull', 'origin', 'master')
+pip install --user virtualfish
+mkdir -p ~/.ipython/profile_default/startup
+ln -s `pwd`/ipython/profile_default/startup/00-autoreload.ipy ~/ipython/profile_default/startup/00-autoreload.ipy
 
-    if args.binaries:
-        install_binaries()
-
-    for platform in platforms():
-        process_entries(MANIFEST[platform])
-
-    for vim in ['nvim', 'vim']:
-        # I don't know why but vim exits with a status code != 0...
-        subprocess.call([vim, '-E', '+PlugUpgrade', '+PlugUpdate',
-                         '+PlugClean!', '+qall'])
+# NeoVim
+sudo dnf install -y neovim
 
 
-def install_binaries():
-    for binary in BINARY_MANIFEST:
-        print('Installing {}...'.format(binary['name']))
-
-        with cd(binary.get('src', '.')):
-            cmd = binary['cmd']
-
-            if callable(cmd):
-                cmd()
-            else:
-                run(*binary['cmd'])
+# Autojump
+sudo dnf install -y autojump autojump-fish
 
 
-def platforms():
-    ret = []
-
-    if sys.platform == "darwin" or sys.platform == "linux2":
-        ret.append("unix")
-
-    ret.append(sys.platform)
-
-    return ret
+# Direnv
+sudo dnf install -y direnv
 
 
-def process_entries(entries):
-    for entry in entries:
-        install_dotfile(entry['source'], entry['dest'])
+# Rust
+curl https://sh.rustup.rs -sSf | sh
+rustup update
 
 
-def install_dotfile(source, dest):
-    source_path = os.path.join(os.getcwd(), source)
-    dest_path = os.path.expandvars(os.path.expanduser(dest))
-
-    if os.path.isfile(source_path):
-        symlink(source_path, dest_path)
-    elif os.path.isdir(source_path):
-        for dirpath, _, filenames in os.walk(source_path):
-            for f in filenames:
-                s = os.path.join(dirpath, f)
-                d = os.path.join(dest_path, os.path.relpath(s, start=source))
-
-                symlink(s, d)
-
-
-def symlink(source, dest):
-    dirname = os.path.dirname(dest)
-
-    if not os.path.exists(dirname):
-        os.makedirs(dirname)
-
-    if os.path.lexists(dest):
-        os.unlink(dest)
-
-    os.symlink(source, dest)
-
-
-def parse_args():
-    parser = argparse.ArgumentParser()
-    parser.add_argument('--no-binaries',
-                        dest='binaries',
-                        default=True,
-                        action='store_false',
-                        help='do not install binaries')
-
-    return parser.parse_args()
-
-
-@contextlib.contextmanager
-def cd(dirname):
-    pwd = os.getcwd()
-
-    os.chdir(dirname)
-
-    yield
-
-    os.chdir(pwd)
-
-
-def run(*args):
-    subprocess.check_call(args)
-
-
-def output(*args):
-    return subprocess.check_output(args).strip()
-
-
-def die(msg):
-    print(msg)
-    sys.exit(1)
-
-
-if __name__ == '__main__':
-    main()
+echo "Please reboot..."
