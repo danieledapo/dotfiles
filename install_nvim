@@ -16,3 +16,4 @@ mkdir -p $HOME/.config/nvim
 ln -f -s $(realpath init.vim) $HOME/.config/nvim
 
 nvim -c 'call dein#install() | exit'
+nvim -c ':CheckHealth'

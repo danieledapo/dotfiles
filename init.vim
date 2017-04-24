@@ -16,14 +16,13 @@ if dein#load_state('~/.dein')
 
   call dein#add('airblade/vim-gitgutter')
   call dein#add('ctrlpvim/ctrlp.vim')
-  call dein#add('flazz/vim-colorschemes')
+  call dein#add('jacoborus/tender')
   call dein#add('neovimhaskell/haskell-vim')
   call dein#add('rust-lang/rust.vim')
   call dein#add('scrooloose/nerdcommenter')
   call dein#add('scrooloose/nerdtree')
   call dein#add('tpope/vim-fugitive')
   call dein#add('vim-airline/vim-airline')
-  call dein#add('vim-airline/vim-airline-themes')
 
   " Required:
   call dein#end()
@@ -40,6 +39,12 @@ if dein#check_install()
 endif
 
 "End dein Scripts-------------------------
+
+
+if has('nvim')
+  let g:python_host_prog=expand('~/.virtualenvs/neovim/bin/python')
+  let g:python3_host_prog=expand('~/.virtualenvs/neovim3/bin/python')
+endif
 
 
 filetype plugin on    " enable file type plugins
@@ -89,7 +94,14 @@ set lazyredraw
 
 syntax enable
 
-colorscheme badwolf
+if (has("termguicolors"))
+  set termguicolors
+endif
+
+let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+
+colorscheme tender
+let g:airline_theme = 'tender'
 
 set ruler             " show ruler
 
