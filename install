@@ -47,5 +47,7 @@ rustup update
 mkdir -p ~/.config/Code/User
 ln -s `pwd`/code/keybindings.json ~/.config/Code/User/keybindings.json || true
 
+# Haskell
+ln -s `pwd`/ghci.conf ~/.ghci
 
 echo "Please reboot..."
