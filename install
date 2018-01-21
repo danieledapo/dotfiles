@@ -13,9 +13,8 @@ chsh -s /usr/bin/fish
 mkdir -p ~/.config/fish
 ln -s `pwd`/fish/config.fish ~/.config/fish/config.fish || true
 
-# curl -L http://get.oh-my.fish | fish
-
-# omf theme fisk
+curl -L http://get.oh-my.fish | fish
+omf theme fisk
 
 
 # Python
