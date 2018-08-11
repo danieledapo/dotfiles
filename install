@@ -1,52 +1,148 @@
 #!/usr/bin/env bash
 
+set -euo pipefail
 
-set -euox pipefail
+function main() {
+    case $1 in
+        all)
+            install_common
+            install_fish
+            install_vscode
+            install_python
+            install_rust
+            install_haskell
+            install_nvim
+            install_apps
+            ;;
+        apps)
+            install_apps
+            ;;
+        vscode)
+            install_vscode
+            ;;
+        common)
+            install_common
+            ;;
+        haskell)
+            install_haskell
+            ;;
+        fish)
+            install_fish
+            ;;
+        nvim)
+            install_nvim
+            ;;
+        python)
+            install_python
+            ;;
+        rust)
+            install_rust
+            ;;
+        *)
+            echo "unknown target to install"
+            exit 1
+            ;;
+    esac
 
+    echo "Done"
+}
 
-# Fish
-sudo dnf config-manager --add-repo http://download.opensuse.org/repositories/shells:fish:release:2/Fedora_25/shells:fish:release:2.repo
-sudo dnf install -y fish
+function install_common() {
+    echo "Installing common utilities..."
+    sudo apt update
+    sudo apt install -y autojump build-essential curl direnv git shellcheck
 
-chsh -s /usr/bin/fish
+    ln -s "$(pwd)/gitconfig" ~/.gitconfig || true
+}
 
-mkdir -p ~/.config/fish
-ln -s `pwd`/fish/config.fish ~/.config/fish/config.fish || true
+function install_fish() {
+    echo "Installing and configuring the fish shell..."
 
-curl -L http://get.oh-my.fish | fish
-omf theme fisk
+    sudo apt install fish
 
+    chsh -s /usr/bin/fish
 
-# Python
-sudo dnf install -y python python3 ipython
+    mkdir -p ~/.config/fish
+    ln -s "$(pwd)/fish/config.fish" ~/.config/fish/config.fish || true
 
-pip install --user virtualfish
-mkdir -p ~/.ipython/profile_default/startup
-ln -s `pwd`/ipython/profile_default/startup/00-autoreload.ipy ~/ipython/profile_default/startup/00-autoreload.ipy || true
+    curl -L http://get.oh-my.fish > /tmp/omf.fish
+    chmod +x /tmp/omf.fish
+    /tmp/omf.fish --noninteractive
 
+    fish -c "omf install fisk"
+    fish -c "omf theme fisk"
 
-# NeoVim
-sudo dnf install -y neovim
+    echo "You should logout to have the fish shell as the default"
+}
 
+function install_python() {
+    echo "Installing python3..."
 
-# Autojump
-sudo dnf install -y autojump autojump-fish
+    sudo apt install -y python3 ipython3
 
+    mkdir -p ~/.ipython/profile_default/startup
+    ln -s "$(pwd)/ipython/profile_default/startup/00-autoreload.ipy" ~/ipython/profile_default/startup/00-autoreload.ipy || true
+}
 
-# Direnv
-sudo dnf install -y direnv
+function install_rust() {
+    echo "Installing rust..."
 
+    curl https://sh.rustup.rs -sSf | sh
+    rustup update
+}
 
-# Rust
-curl https://sh.rustup.rs -sSf | sh
-rustup update
+function install_haskell() {
+    # TODO: actually install haskell
+    echo "Installing haskell..."
 
+    ln -s "$(pwd)/ghci.conf" ~/.ghci
+}
 
-# Code
-mkdir -p ~/.config/Code/User
-ln -s `pwd`/code/keybindings.json ~/.config/Code/User/keybindings.json || true
+function install_vscode() {
+    echo "Installing VSCode..."
 
-# Haskell
-ln -s `pwd`/ghci.conf ~/.ghci
+    sudo snap install vscode --classic
 
-echo "Please reboot..."
+    vscode \
+        --install-extension timonwong.shellcheck \
+        --install-extension lunaryorn.fish-ide \
+        --install-extension rust-lang.rust \
+        --install-extension ms-python.python
+
+    mkdir -p ~/.config/Code/User
+    ln -s "$(pwd)/code/keybindings.json" ~/.config/Code/User/keybindings.json || true
+    ln -s "$(pwd)/code/settings.json" ~/.config/Code/User/settings.json || true
+
+}
+
+function install_nvim() {
+    echo "Installing NeoVim..."
+
+    sudo apt install -y neovim python3-neovim
+
+    DEIN_DIR="$HOME/.dein"
+
+    curl https://raw.githubusercontent.com/Shougo/dein.vim/master/bin/installer.sh > /tmp/install_dein.sh
+    sh /tmp/install_dein.sh "$DEIN_DIR"
+
+    mkdir -p "$HOME/.config/nvim"
+    ln -f -s "$(realpath init.vim)" "$HOME/.config/nvim"
+
+    nvim -c 'call dein#install() | exit'
+    nvim -c ':CheckHealth'
+}
+
+function install_apps() {
+    echo "Installing miscellaneous apps..."
+
+    sudo snap install slack --classic
+    sudo snap install bitwarden spotify
+}
+
+if [ $# -eq 0 ]
+    then
+    echo "Please provide a target to install, use all to install everything"
+    exit 1
+fi
+
+main "$1"

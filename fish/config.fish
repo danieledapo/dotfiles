@@ -22,11 +22,6 @@ if test -f /usr/share/autojump/autojump.fish
 end
 
 #
-# Virtualfish
-#
-eval (python -m virtualfish auto_activation)
-
-#
 # Direnv
 #
-eval (direnv hook fish); or true
+eval (direnv hook fish)
