@@ -2,5 +2,6 @@
     "files.autoSave": "onFocusChange",
     "editor.insertSpaces": true,
     "files.trimFinalNewlines": true,
-    "files.trimTrailingWhitespace": true
+    "files.trimTrailingWhitespace": true,
+    "shellcheck.disableVersionCheck": true
 }
