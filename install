@@ -78,7 +78,9 @@ function install_fish() {
 function install_python() {
     echo "Installing python3..."
 
-    sudo apt install -y python3 ipython3
+    sudo apt install -y python3 python3-pip ipython3
+
+    pip3 install --user pipenv
 
     mkdir -p ~/.ipython/profile_default/startup
     ln -s "$(pwd)/ipython/profile_default/startup/00-autoreload.ipy" ~/ipython/profile_default/startup/00-autoreload.ipy || true
