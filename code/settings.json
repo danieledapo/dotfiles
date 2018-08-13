@@ -3,5 +3,6 @@
     "editor.insertSpaces": true,
     "files.trimFinalNewlines": true,
     "files.trimTrailingWhitespace": true,
-    "shellcheck.disableVersionCheck": true
+    "shellcheck.disableVersionCheck": true,
+    "editor.formatOnSave": true
 }
