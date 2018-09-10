@@ -4,5 +4,7 @@
     "files.trimFinalNewlines": true,
     "files.trimTrailingWhitespace": true,
     "shellcheck.disableVersionCheck": true,
-    "editor.formatOnSave": true
+    "editor.formatOnSave": true,
+    "window.zoomLevel": 0,
+    "terminal.integrated.rendererType": "dom"
 }
