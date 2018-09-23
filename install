@@ -38,6 +38,9 @@ function main() {
         rust)
             install_rust
             ;;
+        node)
+            install_node
+            ;;
         *)
             echo "unknown target to install"
             exit 1
@@ -146,6 +149,18 @@ function install_apps() {
 
     sudo snap install slack --classic
     sudo snap install bitwarden spotify
+}
+
+
+function install_node() {
+    echo "Installing node..."
+
+    # TODO: install nvm
+
+    # yarn
+    curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
+    echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
+    sudo apt update && sudo apt install -y yarn
 }
 
 if [ $# -eq 0 ]
