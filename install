@@ -159,7 +159,7 @@ function install_apps() {
 function install_node() {
     echo "Installing node..."
 
-    # TODO: install nvm
+    omf install nvm
 
     # yarn
     curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
