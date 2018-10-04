@@ -6,5 +6,6 @@
     "shellcheck.disableVersionCheck": true,
     "editor.formatOnSave": true,
     "window.zoomLevel": 0,
-    "terminal.integrated.rendererType": "dom"
+    "terminal.integrated.rendererType": "dom",
+    "files.insertFinalNewline": true
 }
