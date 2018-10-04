@@ -13,6 +13,7 @@ function main() {
             install_haskell
             install_nvim
             install_apps
+            install_ui
             ;;
         apps)
             install_apps
@@ -40,6 +41,9 @@ function main() {
             ;;
         node)
             install_node
+            ;;
+        ui)
+            install_ui
             ;;
         *)
             echo "unknown target to install"
@@ -161,6 +165,14 @@ function install_node() {
     curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
     echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
     sudo apt update && sudo apt install -y yarn
+}
+
+
+function install_ui() {
+    echo "customizing ui..."
+
+    sudo apt install numix-gtk-theme
+    gsettings set org.gnome.desktop.interface gtk-theme Numix
 }
 
 if [ $# -eq 0 ]
