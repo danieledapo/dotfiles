@@ -63,6 +63,10 @@ function install_common() {
     sudo snap alias ripgrep.rg rg
 
     ln -s "$(pwd)/gitconfig" ~/.gitconfig || true
+
+    # restore gnome terminal config, to update the config run
+    # `dconf dump /org/gnome/terminal/ > gnome_terminal.conf`
+    dconf load /org/gnome/terminal/ < gnome_terminal.conf
 }
 
 function install_fish() {
