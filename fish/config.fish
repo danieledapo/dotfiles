@@ -25,3 +25,14 @@ end
 # Direnv
 #
 eval (direnv hook fish)
+
+#
+# Byobu
+#
+
+# N.B. the terminal emulator should run the shell as the login shell in order to
+# have this check pass
+
+status is-login
+and status is-interactive
+and exec byobu-launcher
