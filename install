@@ -110,8 +110,9 @@ function install_rust() {
 }
 
 function install_haskell() {
-    # TODO: actually install haskell
     echo "Installing haskell..."
+
+    curl -sSL https://get.haskellstack.org/ | sh
 
     ln -s "$(pwd)/ghci.conf" ~/.ghci
 }
