@@ -164,7 +164,8 @@ function install_apps() {
 function install_node() {
     echo "Installing node..."
 
-    omf install nvm
+    curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | bash
+    fish -c "omf install nvm"
 
     # yarn
     curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
