@@ -99,7 +99,7 @@ function install_python() {
     pip3 install --user pipenv
 
     mkdir -p ~/.ipython/profile_default/startup
-    ln -s "$(pwd)/ipython/profile_default/startup/00-autoreload.ipy" ~/ipython/profile_default/startup/00-autoreload.ipy || true
+    ln -s "$(pwd)/ipython/profile_default/startup/00-autoreload.ipy" ~/.ipython/profile_default/startup/00-autoreload.ipy || true
 }
 
 function install_rust() {
