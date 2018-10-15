@@ -36,3 +36,17 @@ eval (direnv hook fish)
 status is-login
 and status is-interactive
 and exec byobu-launcher
+
+#
+# Pyenv
+#
+
+if test -d $HOME/.pyenv/bin
+    set -x PATH "$HOME/.pyenv/bin" $PATH
+
+    status --is-interactive
+    and . (pyenv init -|psub)
+
+    status --is-interactive
+    and . (pyenv virtualenv-init -|psub)
+end
