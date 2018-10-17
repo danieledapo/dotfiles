@@ -1,11 +1,13 @@
 {
-    "files.autoSave": "onFocusChange",
+    "editor.fontFamily": "'Fira Code', 'Droid Sans Mono', 'monospace', monospace, 'Droid Sans Fallback'",
+    "editor.fontLigatures": true,
+    "editor.formatOnSave": true,
     "editor.insertSpaces": true,
+    "files.autoSave": "onFocusChange",
+    "files.insertFinalNewline": true,
     "files.trimFinalNewlines": true,
     "files.trimTrailingWhitespace": true,
     "shellcheck.disableVersionCheck": true,
-    "editor.formatOnSave": true,
-    "window.zoomLevel": 0,
     "terminal.integrated.rendererType": "dom",
-    "files.insertFinalNewline": true
+    "window.zoomLevel": 0
 }
