@@ -57,7 +57,7 @@ function main() {
 function install_common() {
     echo "Installing common utilities..."
     sudo apt update
-    sudo apt install -y autojump build-essential byobu curl direnv git shellcheck
+    sudo apt install -y autojump build-essential byobu curl direnv fonts-firacode git shellcheck
 
     sudo snap install ripgrep tldr
     sudo snap alias ripgrep.rg rg
