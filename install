@@ -83,8 +83,8 @@ function install_fish() {
     chmod +x /tmp/omf.fish
     /tmp/omf.fish --noninteractive
 
-    fish -c "omf install fisk"
-    fish -c "omf theme fisk"
+    fish -c "omf install https://github.com/d-dorazio/theme-onigiri"
+    fish -c "omf theme onigiri"
 
     echo "You should logout to have the fish shell as the default"
 }
