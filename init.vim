@@ -29,10 +29,15 @@ Plug 'tyrannicaltoucan/vim-quantum'
 
 call plug#end()
 
+
+let g:python_host_prog = "/home/daniele/.pyenv/versions/neovim2/bin/python"
+let g:python3_host_prog = "/home/daniele/.pyenv/versions/neovim3/bin/python"
+
 " Map leader
 
 let mapleader = ","
 let g:mapleader = ","
+
 
 " Files
 
@@ -115,4 +120,3 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isT
 " NerdCommenter
 
 noremap <leader>c :call NERDComment(0,"toggle")<CR>
-

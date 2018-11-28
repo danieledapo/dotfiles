@@ -141,10 +141,21 @@ function install_vscode() {
 function install_nvim() {
     echo "Installing NeoVim..."
 
-    sudo apt install -y neovim python3-neovim
+    sudo apt install -y neovim
 
     mkdir -p "$HOME/.config/nvim"
     ln -f -s "$(realpath init.vim)" "$HOME/.config/nvim"
+
+    pyenv virtualenv --python=python2 neovim2
+    pyenv virtualenv --python=python3 neovim3
+
+    # virtualenv activate script sucks and it's full of errors...
+    set +u
+    # shellcheck source=/dev/null
+    source "$HOME/.pyenv/versions/neovim2/bin/activate" && pip install neovim && deactivate
+    # shellcheck source=/dev/null
+    source "$HOME/.pyenv/versions/neovim3/bin/activate" && pip install neovim && deactivate
+    set -u
 
     nvim -c 'PlugInstall --sync' -c 'qa'
     nvim -c ':CheckHealth'
