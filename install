@@ -143,15 +143,10 @@ function install_nvim() {
 
     sudo apt install -y neovim python3-neovim
 
-    DEIN_DIR="$HOME/.dein"
-
-    curl https://raw.githubusercontent.com/Shougo/dein.vim/master/bin/installer.sh > /tmp/install_dein.sh
-    sh /tmp/install_dein.sh "$DEIN_DIR"
-
     mkdir -p "$HOME/.config/nvim"
     ln -f -s "$(realpath init.vim)" "$HOME/.config/nvim"
 
-    nvim -c 'call dein#install() | exit'
+    nvim -c 'PlugInstall --sync' -c 'qa'
     nvim -c ':CheckHealth'
 }
 

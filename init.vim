@@ -1,62 +1,38 @@
-"dein Scripts-----------------------------
-if &compatible
-  set nocompatible               " Be iMproved
+" Automatically install vim-plug
+if empty(glob('~/.vim/autoload/plug.vim'))
+  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
-" Required:
-set runtimepath+=~/.dein/repos/github.com/Shougo/dein.vim
+" Plugins
 
-" Required:
-if dein#load_state('~/.dein')
-  call dein#begin('~/.dein')
+call plug#begin('~/.vim/plugged')
 
-  " Let dein manage dein
-  " Required:
-  call dein#add('~/.dein/repos/github.com/Shougo/dein.vim')
+" files
+Plug 'scrooloose/nerdtree'
+Plug 'junegunn/fzf'
+Plug 'junegunn/fzf.vim'
 
-  call dein#add('airblade/vim-gitgutter')
-  call dein#add('ctrlpvim/ctrlp.vim')
-  call dein#add('jacoborus/tender')
-  call dein#add('jremmen/vim-ripgrep')
-  call dein#add('neovimhaskell/haskell-vim')
-  call dein#add('rust-lang/rust.vim')
-  call dein#add('scrooloose/nerdcommenter')
-  call dein#add('scrooloose/nerdtree')
-  call dein#add('tpope/vim-fugitive')
-  call dein#add('vim-airline/vim-airline')
+" editing
+Plug 'tpope/vim-surround'
 
-  " Required:
-  call dein#end()
-  call dein#save_state()
-endif
+" git
+Plug 'airblade/vim-gitgutter'
 
-" Required:
-filetype plugin indent on
-syntax enable
+" misc
+Plug 'scrooloose/nerdcommenter'
 
-" If you want to install not installed plugins on startup.
-if dein#check_install()
-  call dein#install()
-endif
+" ui
+Plug 'itchyny/lightline.vim'
+Plug 'tyrannicaltoucan/vim-quantum'
 
-"End dein Scripts-------------------------
-
-
-if has('nvim')
-  let g:python_host_prog=expand('~/.virtualenvs/neovim/bin/python')
-  let g:python3_host_prog=expand('~/.virtualenvs/neovim3/bin/python')
-endif
-
-
-filetype plugin on    " enable file type plugins
-filetype indent on    " enable file type indentation
-
+call plug#end()
 
 " Map leader
 
 let mapleader = ","
 let g:mapleader = ","
-
 
 " Files
 
@@ -91,18 +67,15 @@ set smartcase
 set lazyredraw
 
 
-" Colors and UI
+" Theme and colorscheme
 
-syntax enable
+set background=dark
+set termguicolors
+silent! colorscheme quantum " use silent! to avoid an error during installation
+let g:lightline = { 'colorscheme': 'quantum' }
 
-if (has("termguicolors"))
-  set termguicolors
-endif
 
-let $NVIM_TUI_ENABLE_TRUE_COLOR=1
-
-colorscheme tender
-let g:airline_theme = 'tender'
+" Lines and columns
 
 set ruler             " show ruler
 
@@ -142,11 +115,4 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isT
 " NerdCommenter
 
 noremap <leader>c :call NERDComment(0,"toggle")<CR>
-
-
-" Ctrlp
-
-if executable('rg') && !exists('g:ctrlp_user_command')
-  let g:ctrlp_user_command = 'rg %s --files'
-endif
 
