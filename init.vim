@@ -14,6 +14,9 @@ Plug 'scrooloose/nerdtree'
 Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
 
+" language servers
+Plug 'w0rp/ale'
+
 " editing
 Plug 'tpope/vim-surround'
 
