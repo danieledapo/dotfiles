@@ -41,6 +41,10 @@ let g:python3_host_prog = "/home/daniele/.pyenv/versions/neovim3/bin/python"
 let mapleader = ","
 let g:mapleader = ","
 
+" ale configuration
+let g:ale_fix_on_save = 1
+let g:ale_linters = {'rust': ['rls']}
+let g:ale_fixers = {'*': ['remove_trailing_lines', 'trim_whitespace'], 'rust': ['rustfmt']}
 
 " Files
 
@@ -50,9 +54,7 @@ set wildignore=*.o,*~,*.pyc,*/.git/*,*/.svn/* " ignore some files
 
 " Editing
 
-set backspace=eol,start,indent      " enable backspace on eol, sol and indentation
-
-autocmd BufWritePre * %s/\s\+$//e   " remove trailing whitespaces
+"set backspace=eol,start,indent      " enable backspace on eol, sol and indentation
 
 
 " Copy and Paste to OS clipboard
