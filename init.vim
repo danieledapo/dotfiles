@@ -88,9 +88,7 @@ let g:lightline = { 'colorscheme': 'quantum' }
 " Lines and columns
 
 set ruler             " show ruler
-
 set number            " show numbers
-set relativenumber    " relative line numbers
 set cursorline        " highlight line
 set showmatch         " highlight matching parens, bracket,...
 
