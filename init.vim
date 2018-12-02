@@ -121,5 +121,5 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isT
 
 
 " NerdCommenter
-
-noremap <leader>c :call NERDComment(0,"toggle")<CR>
+let g:NERDSpaceDelims = 1
+let g:NERDCommentEmptyLines = 1
