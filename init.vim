@@ -106,6 +106,14 @@ let g:ale_linters = {'rust': ['rls']}
 let g:ale_fixers = {'*': ['remove_trailing_lines', 'trim_whitespace'], 'rust': ['rustfmt']}
 
 
+" Search
+let $FZF_DEFAULT_COMMAND = "rg --files"
+let g:fzf_layout = { 'down': '~20%' }
+map <C-p> :Files<CR>
+map <C-f> :Rg<space>
+
+
+" NerdTree
 map <leader>t :NERDTreeToggle<CR>
 
 " quit if NerdTree is the only window open
