@@ -66,6 +66,7 @@ set ignorecase
 set incsearch
 set smartcase
 
+
 " UI
 set lazyredraw
 
@@ -82,6 +83,7 @@ set ruler             " show ruler
 set number            " show numbers
 set cursorline        " highlight line
 set showmatch         " highlight matching parens, bracket,...
+set nowrap            " do not wrap lines
 
 
 " Indentation
