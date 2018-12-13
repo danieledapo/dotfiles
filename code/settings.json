@@ -9,6 +9,5 @@
     "files.trimTrailingWhitespace": true,
     "shellcheck.disableVersionCheck": true,
     "terminal.integrated.rendererType": "dom",
-    "window.zoomLevel": 0,
-    "window.titleBarStyle": "custom"
+    "window.zoomLevel": 0
 }
