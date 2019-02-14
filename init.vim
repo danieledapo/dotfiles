@@ -103,9 +103,10 @@ map <C-l> <C-W>l
 
 
 " ale configuration
+let g:ale_completion_enabled = 1
 let g:ale_fix_on_save = 1
-let g:ale_linters = {'rust': ['rls']}
 let g:ale_fixers = {'*': ['remove_trailing_lines', 'trim_whitespace'], 'rust': ['rustfmt']}
+let g:ale_linters = {'rust': ['rls']}
 
 
 " Search
