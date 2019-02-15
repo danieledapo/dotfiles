@@ -86,6 +86,13 @@ set cursorline        " highlight line
 set showmatch         " highlight matching parens, bracket,...
 set nowrap            " do not wrap lines
 
+" Split navigation
+set splitright
+set splitbelow
+map <C-j> <C-W>j
+map <C-k> <C-W>k
+map <C-h> <C-W>h
+map <C-l> <C-W>l
 
 " Indentation
 set expandtab        " tab to spaces
@@ -94,13 +101,6 @@ set tabstop=4        " number of spaces per TAB
 set softtabstop=4    " number of spaces when editing
 set autoindent
 set smartindent
-
-
-" Navigation
-map <C-j> <C-W>j
-map <C-k> <C-W>k
-map <C-h> <C-W>h
-map <C-l> <C-W>l
 
 
 " ale configuration
