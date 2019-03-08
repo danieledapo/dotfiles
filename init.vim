@@ -49,7 +49,7 @@ set wildignore=*.o,*~,*.pyc,*/.git/*,*/.svn/* " ignore some files
 
 
 " Editing
-"set backspace=eol,start,indent      " enable backspace on eol, sol and indentation
+set backspace=eol,start,indent      " enable backspace on eol, sol and indentation
 
 
 " Copy and Paste to OS clipboard
