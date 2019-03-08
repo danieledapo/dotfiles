@@ -25,7 +25,7 @@ Plug 'airblade/vim-gitgutter'
 
 " misc
 Plug 'scrooloose/nerdcommenter'
-Plug 'HerringtonDarkholme/yats.vim' " typescript syntax highlight
+Plug 'leafgarland/typescript-vim'
 
 " ui
 Plug 'itchyny/lightline.vim'
