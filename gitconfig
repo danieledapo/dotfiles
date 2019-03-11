@@ -1,3 +1,14 @@
 [user]
 	email = d.dorazio96@gmail.com
 	name = Daniele D'Orazio
+
+[alias]
+    aliases = "!git config --name-only --get-regexp alias | cut -d . -f 2"
+    delete-merged-branches = "!git branch --merged | grep -v '*' | xargs --no-run-if-empty git branch -d"
+    week-log = "!git log --oneline --author $(git config user.email) --since '1 week ago'"
+
+[filter "lfs"]
+    process = git-lfs filter-process
+    required = true
+    clean = git-lfs clean -- %f
+    smudge = git-lfs smudge -- %f
