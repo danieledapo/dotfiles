@@ -135,12 +135,13 @@ function install_vscode() {
     mkdir -p ~/.config/Code/User
     ln -s "$(pwd)/code/keybindings.json" ~/.config/Code/User/keybindings.json || true
     ln -s "$(pwd)/code/settings.json" ~/.config/Code/User/settings.json || true
-
 }
 
 function install_nvim() {
     echo "Installing NeoVim..."
 
+    sudo add-apt-repository -y ppa:neovim-ppa/stable
+    sudo apt update
     sudo apt install -y neovim
 
     mkdir -p "$HOME/.config/nvim"
