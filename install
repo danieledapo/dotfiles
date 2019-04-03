@@ -146,7 +146,8 @@ function install_nvim() {
     sudo apt install -y neovim
 
     mkdir -p "$HOME/.config/nvim"
-    ln -f -s "$(realpath init.vim)" "$HOME/.config/nvim"
+    ln -f -s "$(realpath nvim/init.vim)" "$HOME/.config/nvim"
+    ln -f -s "$(realpath nvim/coc-preferences.json)" "$HOME/.config/nvim"
 
     pyenv virtualenv --python=python2 neovim2
     pyenv virtualenv --python=python3 neovim3

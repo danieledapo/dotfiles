@@ -15,7 +15,7 @@ Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
 
 " language servers
-Plug 'w0rp/ale'
+Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}}
 
 " editing
 Plug 'tpope/vim-surround'
@@ -76,7 +76,6 @@ set lazyredraw
 set background=dark
 set termguicolors
 silent! colorscheme quantum " use silent! to avoid an error during installation
-let g:lightline = { 'colorscheme': 'quantum' }
 
 
 " Lines and columns
@@ -103,11 +102,22 @@ set autoindent
 set smartindent
 
 
-" ale configuration
-let g:ale_completion_enabled = 1
-let g:ale_fix_on_save = 1
-let g:ale_fixers = {'*': ['remove_trailing_lines', 'trim_whitespace'], 'rust': ['rustfmt']}
-let g:ale_linters = {'rust': ['rls']}
+" lsp configuration
+let g:coc_global_extensions = ['coc-json', 'coc-rls', 'coc-tsserver']
+command! -nargs=0 Format :call CocAction('format')
+
+
+" lightline
+let g:lightline = {
+      \ 'colorscheme': 'quantum',
+      \ 'active': {
+      \   'left': [ [ 'mode', 'paste' ],
+      \             [ 'cocstatus', 'readonly', 'filename', 'modified' ] ]
+      \ },
+      \ 'component_function': {
+      \   'cocstatus': 'coc#status'
+      \ },
+      \ }
 
 
 " Search
