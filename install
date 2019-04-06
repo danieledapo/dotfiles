@@ -122,9 +122,9 @@ function install_haskell() {
 function install_vscode() {
     echo "Installing VSCode..."
 
-    sudo snap install vscode --classic
+    sudo snap install code --classic
 
-    vscode \
+    code \
         --install-extension bungcip.better-toml \
         --install-extension lunaryorn.fish-ide \
         --install-extension ms-python.python \
