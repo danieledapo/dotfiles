@@ -148,8 +148,13 @@ function install_nvim() {
     mkdir -p "$HOME/.config/nvim"
     ln -f -s "$(realpath init.vim)" "$HOME/.config/nvim"
 
-    pyenv virtualenv --python=python2 neovim2
-    pyenv virtualenv --python=python3 neovim3
+    if [ ! -d "$HOME/.pyenv/versions/neovim2" ]; then
+        pyenv virtualenv --python=python2 neovim2
+    fi
+
+    if [ ! -d "$HOME/.pyenv/versions/neovim3" ]; then
+        pyenv virtualenv --python=python3 neovim3
+    fi
 
     # virtualenv activate script sucks and it's full of errors...
     set +u
