@@ -95,13 +95,10 @@ map <C-h> <C-W>h
 map <C-l> <C-W>l
 
 " Indentation
-set expandtab        " tab to spaces
-set smarttab
-set tabstop=4        " number of spaces per TAB
-set softtabstop=4    " number of spaces when editing
-set autoindent
-set smartindent
-
+filetype plugin indent on
+set tabstop=4    " show existing tab with 4 spaces width
+set shiftwidth=4 " when indenting with '>', use 4 spaces width
+set expandtab    " On pressing tab, insert 4 spaces
 
 " ale configuration
 let g:ale_completion_enabled = 1
