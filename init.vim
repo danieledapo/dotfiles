@@ -21,7 +21,7 @@ Plug 'w0rp/ale'
 Plug 'tpope/vim-surround'
 
 " git
-Plug 'airblade/vim-gitgutter'
+Plug 'mhinz/vim-signify'
 
 " misc
 Plug 'scrooloose/nerdcommenter'
