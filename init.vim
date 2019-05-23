@@ -29,7 +29,7 @@ Plug 'leafgarland/typescript-vim'
 
 " ui
 Plug 'itchyny/lightline.vim'
-Plug 'tyrannicaltoucan/vim-quantum'
+Plug 'rakr/vim-one'
 
 call plug#end()
 
@@ -73,10 +73,10 @@ set lazyredraw
 
 
 " Theme and colorscheme
-set background=dark
 set termguicolors
-silent! colorscheme quantum " use silent! to avoid an error during installation
-let g:lightline = { 'colorscheme': 'quantum' }
+set background=dark
+silent! colorscheme one " use silent! to avoid an error during installation
+let g:lightline = { 'colorscheme': 'one' }
 
 
 " Lines and columns
