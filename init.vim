@@ -18,13 +18,14 @@ Plug 'junegunn/fzf.vim'
 Plug 'w0rp/ale'
 
 " editing
+Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 
 " git
 Plug 'mhinz/vim-signify'
 
 " misc
-Plug 'scrooloose/nerdcommenter'
 Plug 'leafgarland/typescript-vim'
 
 " ui
@@ -128,6 +129,6 @@ map <leader>t :NERDTreeToggle<CR>
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
 
-" NerdCommenter
-let g:NERDSpaceDelims = 1
-let g:NERDCommentEmptyLines = 1
+" vim-commentary
+nmap <leader>c <Plug>Commentary
+vmap <leader>c <Plug>Commentary
