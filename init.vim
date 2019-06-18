@@ -30,6 +30,7 @@ Plug 'leafgarland/typescript-vim'
 
 " ui
 Plug 'itchyny/lightline.vim'
+Plug 'junegunn/goyo.vim'
 Plug 'rakr/vim-one'
 
 call plug#end()
@@ -87,6 +88,7 @@ set cursorline        " highlight line
 set showmatch         " highlight matching parens, bracket,...
 set nowrap            " do not wrap lines
 
+
 " Split navigation
 set splitright
 set splitbelow
@@ -95,11 +97,13 @@ map <C-k> <C-W>k
 map <C-h> <C-W>h
 map <C-l> <C-W>l
 
+
 " Indentation
 filetype plugin indent on
 set tabstop=4    " show existing tab with 4 spaces width
 set shiftwidth=4 " when indenting with '>', use 4 spaces width
 set expandtab    " On pressing tab, insert 4 spaces
+
 
 " ale configuration
 let g:ale_completion_enabled = 1
@@ -133,3 +137,18 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isT
 " vim-commentary
 nmap <leader>c <Plug>Commentary
 vmap <leader>c <Plug>Commentary
+
+" goyo - zen mode
+let g:goyo_width = 100
+let g:goyo_height = 100
+
+function! s:goyo_enter()
+    " by default goyo resets everything, but I still want to see the numbers
+    " and the current line
+    set number
+    set cursorline
+endfunction
+
+autocmd! User GoyoEnter call <SID>goyo_enter()
+
+nmap <leader>z :Goyo<CR>
