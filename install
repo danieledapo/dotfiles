@@ -109,7 +109,7 @@ function install_rust() {
     curl https://sh.rustup.rs -sSf | sh
     rustup update
     rustup install nightly
-    rustup component add rustfmt-preview clippy-preview
+    rustup component add rustfmt clippy
 }
 
 function install_haskell() {
