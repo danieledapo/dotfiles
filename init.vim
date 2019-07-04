@@ -98,6 +98,13 @@ map <C-h> <C-W>h
 map <C-l> <C-W>l
 
 
+" Tab navigation
+map <C-t> :tabnew<CR>
+map <C-q> :tabclose<CR>
+map <C-n> :tabnext<CR>
+map <C-b> :tabprevious<CR>
+
+
 " Indentation
 filetype plugin indent on
 set tabstop=4    " show existing tab with 4 spaces width
