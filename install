@@ -73,7 +73,7 @@ function install_common() {
 function install_fish() {
     echo "Installing and configuring the fish shell..."
 
-    sudo apt install fish
+    sudo apt install -y fish
 
     chsh -s /usr/bin/fish
 
