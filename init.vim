@@ -31,7 +31,7 @@ Plug 'leafgarland/typescript-vim'
 " ui
 Plug 'itchyny/lightline.vim'
 Plug 'junegunn/goyo.vim'
-Plug 'rakr/vim-one'
+Plug 'junegunn/seoul256.vim'
 
 call plug#end()
 
@@ -76,9 +76,10 @@ set lazyredraw
 
 " Theme and colorscheme
 set termguicolors
+
+silent! colorscheme seoul256 " use silent! to avoid an error during installation
+let g:lightline = { 'colorscheme': 'seoul256' }
 set background=dark
-silent! colorscheme one " use silent! to avoid an error during installation
-let g:lightline = { 'colorscheme': 'one' }
 
 
 " Lines and columns
