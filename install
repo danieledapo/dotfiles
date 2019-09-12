@@ -82,7 +82,7 @@ function install_fish() {
 
     curl -L http://get.oh-my.fish > /tmp/omf.fish
     chmod +x /tmp/omf.fish
-    /tmp/omf.fish --noninteractive
+    /tmp/omf.fish --noninteractive --yes
 
     fish -c "omf install https://github.com/d-dorazio/theme-onigiri"
     fish -c "omf theme onigiri"
