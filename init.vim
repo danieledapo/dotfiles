@@ -120,6 +120,7 @@ let g:ale_fixers = {
             \ '*': ['remove_trailing_lines', 'trim_whitespace'],
             \ 'go': ['gofmt'],
             \ 'haskell': ['brittany'],
+            \ 'python': ['black'],
             \ 'rust': ['rustfmt'],
             \ }
 let g:ale_linters = {
