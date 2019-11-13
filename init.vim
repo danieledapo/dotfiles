@@ -125,7 +125,7 @@ let g:ale_fixers = {
             \ }
 let g:ale_linters = {
             \ 'rust': ['rls'],
-            \ 'haskell': ['hlint', 'stack-build'],
+            \ 'haskell': ['hlint'],
             \ }
 
 
