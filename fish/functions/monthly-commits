@@ -24,7 +24,7 @@ function monthly-commits
         | jq -r ".contributions | map(select(.date >= \"$first\" and .date <= \"$last\")) | reverse | .[].count"
     )
 
-    printf "\n         $month\n\n  "
+    printf "\n         \033[1m$month\033[0m\n\n  "
 
     set total 0
     for c in $data
