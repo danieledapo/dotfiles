@@ -1,32 +1,29 @@
 " Automatically install vim-plug
 if empty(glob('~/.local/share/nvim/site/autoload/plug.vim'))
-  silent !curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs
-   \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+    silent !curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs
+                \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
 " Plugins
 
 call plug#begin('~/.vim/plugged')
 
-" files
-Plug 'scrooloose/nerdtree'
-Plug 'junegunn/fzf'
-Plug 'junegunn/fzf.vim'
-
-" language servers
-Plug 'w0rp/ale'
-
 " editing
 Plug 'tpope/vim-commentary'
-Plug 'tpope/vim-repeat'
-Plug 'tpope/vim-surround'
+
+" files
+Plug 'nvim-lua/popup.nvim'
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-telescope/telescope.nvim'
+
+" language servers
+Plug 'hrsh7th/nvim-compe'
+Plug 'neovim/nvim-lspconfig'
+" Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 
 " git
 Plug 'mhinz/vim-signify'
-
-" misc
-Plug 'leafgarland/typescript-vim'
 
 " ui
 Plug 'itchyny/lightline.vim'
@@ -37,7 +34,6 @@ call plug#end()
 
 
 " Neovim config
-let g:python_host_prog = "/home/daniele/.pyenv/versions/neovim2/bin/python"
 let g:python3_host_prog = "/home/daniele/.pyenv/versions/neovim3/bin/python"
 
 
@@ -113,34 +109,28 @@ set shiftwidth=4 " when indenting with '>', use 4 spaces width
 set expandtab    " On pressing tab, insert 4 spaces
 
 
-" ale configuration
-let g:ale_completion_enabled = 1
-let g:ale_fix_on_save = 1
-let g:ale_fixers = {
-            \ '*': ['remove_trailing_lines', 'trim_whitespace'],
-            \ 'go': ['gofmt'],
-            \ 'haskell': ['brittany'],
-            \ 'python': ['black'],
-            \ 'rust': ['rustfmt'],
-            \ }
-let g:ale_linters = {
-            \ 'rust': ['rls'],
-            \ 'haskell': ['hlint'],
-            \ }
+" fuzzy searching
+nnoremap <C-p> <cmd>Telescope find_files<cr>
+nnoremap <C-f> <cmd>Telescope live_grep<cr>
 
 
-" Search
-let $FZF_DEFAULT_COMMAND = "rg --files"
-let g:fzf_layout = { 'down': '~20%' }
-map <C-p> :Files<CR>
-map <C-f> :Rg<space>
+" autocompletion
+set completeopt=menuone,noselect
+let g:compe = {}
+let g:compe.enabled = v:true
+let g:compe.source = {
+  \ 'path': v:true,
+  \ 'buffer': v:true,
+  \ 'nvim_lsp': v:true,
+  \ }
+inoremap <silent><expr> <C-Space> compe#complete()
+inoremap <silent><expr> <CR>      compe#confirm('<CR>')
+inoremap <silent><expr> <C-e>     compe#close('<C-e>')
 
 
-" NerdTree
-map <leader>t :NERDTreeToggle<CR>
-
-" quit if NerdTree is the only window open
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+" lsp configuration
+lua require'lspconfig'.rust_analyzer.setup({})
+" lua require'lspconfig'.clangd.setup({})
 
 
 " vim-commentary
