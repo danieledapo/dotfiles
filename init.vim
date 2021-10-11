@@ -16,6 +16,8 @@ Plug 'tpope/vim-commentary'
 Plug 'nvim-lua/popup.nvim'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
+Plug 'kyazdani42/nvim-web-devicons'
+Plug 'kyazdani42/nvim-tree.lua'
 
 " language servers
 Plug 'hrsh7th/nvim-compe'
@@ -110,6 +112,7 @@ set expandtab    " On pressing tab, insert 4 spaces
 
 
 " fuzzy searching
+nnoremap <leader>t :NvimTreeToggle<CR>
 nnoremap <C-p> <cmd>Telescope find_files<cr>
 nnoremap <C-f> <cmd>Telescope live_grep<cr>
 
