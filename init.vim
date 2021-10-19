@@ -112,6 +112,7 @@ set expandtab    " On pressing tab, insert 4 spaces
 
 
 " fuzzy searching
+lua require'nvim-tree'.setup{}
 nnoremap <leader>t :NvimTreeToggle<CR>
 nnoremap <C-p> <cmd>Telescope find_files<cr>
 nnoremap <C-f> <cmd>Telescope live_grep<cr>
