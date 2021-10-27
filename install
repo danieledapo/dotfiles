@@ -88,6 +88,7 @@ function install_fish() {
     fish -c "omf theme onigiri"
 
     ln -s "$(pwd)/fish/functions/monthly-commits" ~/.config/fish/functions/monthly-commits.fish || true
+    ln -s "$(pwd)/fish/functions/thought" ~/.config/fish/functions/thought.fish || true
 
     echo "You should logout to have the fish shell as the default"
 }

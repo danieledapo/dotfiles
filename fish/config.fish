@@ -46,3 +46,5 @@ if test -d $HOME/.pyenv/bin
     status --is-interactive; and source (pyenv init -|psub)
     status --is-interactive; and source (pyenv virtualenv-init -|psub)
 end
+
+alias t thought

@@ -1,0 +1,11 @@
+#!/usr/bin/env fish
+
+function thought
+    if test (count $argv) -eq 0
+        return
+    end
+
+    set now (date -Iseconds)
+    echo "$now" "$argv" >> ~/thoughts.txt
+end
+
