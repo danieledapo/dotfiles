@@ -41,7 +41,6 @@ and exec byobu-launcher
 if test -d $HOME/.pyenv/bin
     set -x PYENV_ROOT "$HOME/.pyenv"
     set -x PATH "$PYENV_ROOT/bin" $PATH
-    set VIRTUAL_ENV_DISABLE_PROMPT 1
 
     status --is-interactive; and source (pyenv init -|psub)
     status --is-interactive; and source (pyenv virtualenv-init -|psub)
