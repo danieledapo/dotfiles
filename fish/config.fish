@@ -47,3 +47,4 @@ if test -d $HOME/.pyenv/bin
 end
 
 alias t thought
+alias o xdg-open
