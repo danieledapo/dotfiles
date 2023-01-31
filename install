@@ -143,30 +143,15 @@ function install_vscode() {
 function install_nvim() {
     echo "Installing NeoVim..."
 
-    sudo add-apt-repository -y ppa:neovim-ppa/stable
-    sudo apt update
-    sudo apt install -y neovim
+    sudo snap install nvim
 
-    mkdir -p "$HOME/.config/nvim"
-    ln -f -s "$(realpath init.vim)" "$HOME/.config/nvim"
+    mv ~/.config/nvim ~/.config/nvim.bak || true
+    mv ~/.local/share/nvim ~/.local/share/nvim.bak || true
+    mv ~/.local/state/nvim ~/.local/state/nvim.bak || true
+    mv ~/.cache/nvim ~/.cache/nvim.bak || true
 
-    if [ ! -d "$HOME/.pyenv/versions/neovim2" ]; then
-        pyenv virtualenv --python=python2 neovim2
-    fi
-
-    if [ ! -d "$HOME/.pyenv/versions/neovim3" ]; then
-        pyenv virtualenv --python=python3 neovim3
-    fi
-
-    # virtualenv activate script sucks and it's full of errors...
-    set +u
-    # shellcheck source=/dev/null
-    source "$HOME/.pyenv/versions/neovim2/bin/activate" && pip install neovim && deactivate
-    # shellcheck source=/dev/null
-    source "$HOME/.pyenv/versions/neovim3/bin/activate" && pip install neovim && deactivate
-    set -u
-
-    nvim -c 'PlugInstall --sync' -c 'qa'
+    git clone https://github.com/LazyVim/starter ~/.config/nvim
+    rm -rf ~/.config/nvim/.git
     nvim -c ':CheckHealth'
 }
 
