@@ -152,7 +152,12 @@ function install_nvim() {
 
     git clone https://github.com/LazyVim/starter ~/.config/nvim
     rm -rf ~/.config/nvim/.git
-    nvim -c ':CheckHealth'
+
+    ln -s "$(pwd)/nvim/lua/plugins/mason.lua" ~/.config/nvim/lua/plugins/mason.lua
+    ln -s "$(pwd)/nvim/lua/plugins/nvim-treesitter.lua" ~/.config/nvim/lua/plugins/nvim-treesitter.lua
+
+    nvim -c "Mason"
+    nvim -c ':checkhealth'
 }
 
 function install_apps() {
