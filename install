@@ -3,168 +3,166 @@
 set -euo pipefail
 
 function main() {
-    case $1 in
-        all)
-            install_common
-            install_fish
-            install_vscode
-            install_python
-            install_rust
-            install_haskell
-            install_nvim
-            install_apps
-            install_ui
-            ;;
-        apps)
-            install_apps
-            ;;
-        vscode)
-            install_vscode
-            ;;
-        common)
-            install_common
-            ;;
-        fish)
-            install_fish
-            ;;
-        nvim)
-            install_nvim
-            ;;
-        python)
-            install_python
-            ;;
-        rust)
-            install_rust
-            ;;
-        ui)
-            install_ui
-            ;;
-        *)
-            echo "unknown target to install"
-            exit 1
-            ;;
-    esac
+	case $1 in
+	all)
+		install_common
+		install_fish
+		install_vscode
+		install_python
+		install_rust
+		install_haskell
+		install_nvim
+		install_apps
+		install_ui
+		;;
+	apps)
+		install_apps
+		;;
+	vscode)
+		install_vscode
+		;;
+	common)
+		install_common
+		;;
+	fish)
+		install_fish
+		;;
+	nvim)
+		install_nvim
+		;;
+	python)
+		install_python
+		;;
+	rust)
+		install_rust
+		;;
+	ui)
+		install_ui
+		;;
+	*)
+		echo "unknown target to install"
+		exit 1
+		;;
+	esac
 
-    echo "Done"
+	echo "Done"
 }
 
 function install_common() {
-    echo "Installing common utilities..."
-    sudo apt update
-    sudo apt install -y autojump build-essential byobu curl direnv fonts-firacode httpie git shellcheck jq tldr fd-find
+	echo "Installing common utilities..."
+	sudo apt update
+	sudo apt install -y autojump build-essential byobu curl direnv fonts-firacode httpie git shellcheck jq tldr fd-find
 
-    sudo snap install ripgrep --classic
-    sudo snap alias ripgrep.rg rg
+	sudo snap install ripgrep --classic
+	sudo snap alias ripgrep.rg rg
 
-    ln -s "$(which fdfind)" ~/.local/bin/fd || true
+	ln -s "$(which fdfind)" ~/.local/bin/fd || true
 
-    ln -s "$(pwd)/gitconfig" ~/.gitconfig || true
+	ln -s "$(pwd)/gitconfig" ~/.gitconfig || true
 
-    # restore gnome terminal config, to update the config run
-    # `dconf dump /org/gnome/terminal/ > gnome_terminal.conf`
-    dconf load /org/gnome/terminal/ < gnome_terminal.conf
+	# restore gnome terminal config, to update the config run
+	# `dconf dump /org/gnome/terminal/ > gnome_terminal.conf`
+	dconf load /org/gnome/terminal/ <gnome_terminal.conf
 }
 
 function install_fish() {
-    echo "Installing and configuring the fish shell..."
+	echo "Installing and configuring the fish shell..."
 
-    sudo apt install -y fish
+	sudo apt install -y fish
 
-    chsh -s /usr/bin/fish
+	chsh -s /usr/bin/fish
 
-    mkdir -p ~/.config/fish
-    ln -s "$(pwd)/fish/config.fish" ~/.config/fish/config.fish || true
+	mkdir -p ~/.config/fish
+	ln -s "$(pwd)/fish/config.fish" ~/.config/fish/config.fish || true
 
-    curl -L http://get.oh-my.fish > /tmp/omf.fish
-    chmod +x /tmp/omf.fish
-    /tmp/omf.fish --noninteractive --yes
+	curl -L http://get.oh-my.fish >/tmp/omf.fish
+	chmod +x /tmp/omf.fish
+	/tmp/omf.fish --noninteractive --yes
 
-    fish -c "omf install https://github.com/d-dorazio/theme-onigiri"
-    fish -c "omf theme onigiri"
+	fish -c "omf install https://github.com/d-dorazio/theme-onigiri"
+	fish -c "omf theme onigiri"
 
-    ln -s "$(pwd)/fish/functions/monthly-commits" ~/.config/fish/functions/monthly-commits.fish || true
-    ln -s "$(pwd)/fish/functions/thought" ~/.config/fish/functions/thought.fish || true
+	ln -s "$(pwd)/fish/functions/monthly-commits" ~/.config/fish/functions/monthly-commits.fish || true
+	ln -s "$(pwd)/fish/functions/thought" ~/.config/fish/functions/thought.fish || true
 
-    echo "You should logout to have the fish shell as the default"
+	echo "You should logout to have the fish shell as the default"
 }
 
 function install_python() {
-    echo "Installing python3..."
+	echo "Installing python3..."
 
-    sudo apt install -y python3 python3-pip ipython3
+	sudo apt install -y python3 python3-pip ipython3
 
-    curl -L https://github.com/pyenv/pyenv-installer/raw/master/bin/pyenv-installer | bash
+	curl -L https://github.com/pyenv/pyenv-installer/raw/master/bin/pyenv-installer | bash
 
-    pip3 install --user pipenv
+	pip3 install --user pipenv
 
-    mkdir -p ~/.ipython/profile_default/startup
-    ln -s "$(pwd)/ipython/profile_default/startup/00-autoreload.ipy" ~/.ipython/profile_default/startup/00-autoreload.ipy || true
+	mkdir -p ~/.ipython/profile_default/startup
+	ln -s "$(pwd)/ipython/profile_default/startup/00-autoreload.ipy" ~/.ipython/profile_default/startup/00-autoreload.ipy || true
 }
 
 function install_rust() {
-    echo "Installing rust..."
+	echo "Installing rust..."
 
-    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-    rustup update
+	curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+	rustup update
 }
 
 function install_vscode() {
-    echo "Installing VSCode..."
+	echo "Installing VSCode..."
 
-    sudo snap install code --classic
+	sudo snap install code --classic
 
-    code \
-        --install-extension bungcip.better-toml \
-        --install-extension lunaryorn.fish-ide \
-        --install-extension ms-python.python \
-        --install-extension rust-lang.rust \
-        --install-extension stkb.rewrap \
-        --install-extension timonwong.shellcheck
+	code \
+		--install-extension bungcip.better-toml \
+		--install-extension lunaryorn.fish-ide \
+		--install-extension ms-python.python \
+		--install-extension rust-lang.rust \
+		--install-extension stkb.rewrap \
+		--install-extension timonwong.shellcheck
 
-    mkdir -p ~/.config/Code/User
-    ln -s "$(pwd)/code/keybindings.json" ~/.config/Code/User/keybindings.json || true
-    ln -s "$(pwd)/code/settings.json" ~/.config/Code/User/settings.json || true
+	mkdir -p ~/.config/Code/User
+	ln -s "$(pwd)/code/keybindings.json" ~/.config/Code/User/keybindings.json || true
+	ln -s "$(pwd)/code/settings.json" ~/.config/Code/User/settings.json || true
 }
 
 function install_nvim() {
-    echo "Installing NeoVim..."
+	echo "Installing NeoVim..."
 
-    sudo snap install nvim
+	sudo snap install nvim
 
-    mv ~/.config/nvim ~/.config/nvim.bak || true
-    mv ~/.local/share/nvim ~/.local/share/nvim.bak || true
-    mv ~/.local/state/nvim ~/.local/state/nvim.bak || true
-    mv ~/.cache/nvim ~/.cache/nvim.bak || true
+	mv ~/.config/nvim ~/.config/nvim.bak || true
+	mv ~/.local/share/nvim ~/.local/share/nvim.bak || true
+	mv ~/.local/state/nvim ~/.local/state/nvim.bak || true
+	mv ~/.cache/nvim ~/.cache/nvim.bak || true
 
-    git clone https://github.com/LazyVim/starter ~/.config/nvim
-    rm -rf ~/.config/nvim/.git
+	git clone https://github.com/LazyVim/starter ~/.config/nvim
+	rm -rf ~/.config/nvim/.git
 
-    ln -s "$(pwd)/nvim/lua/plugins/mason.lua" ~/.config/nvim/lua/plugins/mason.lua
-    ln -s "$(pwd)/nvim/lua/plugins/nvim-treesitter.lua" ~/.config/nvim/lua/plugins/nvim-treesitter.lua
+	ln -s "$(pwd)/nvim/lua/plugins/mason.lua" ~/.config/nvim/lua/plugins/mason.lua
+	ln -s "$(pwd)/nvim/lua/plugins/nvim-treesitter.lua" ~/.config/nvim/lua/plugins/nvim-treesitter.lua
 
-    nvim -c "Mason"
-    nvim -c ':checkhealth'
+	nvim -c "Mason"
+	nvim -c ':checkhealth'
 }
 
 function install_apps() {
-    echo "Installing miscellaneous apps..."
+	echo "Installing miscellaneous apps..."
 
-    sudo snap install slack --classic
-    sudo snap install bitwarden spotify
+	sudo snap install slack --classic
+	sudo snap install bitwarden spotify
 }
-
 
 function install_ui() {
-    echo "customizing ui..."
+	echo "customizing ui..."
 
-    sudo apt install numix-gtk-theme
-    gsettings set org.gnome.desktop.interface gtk-theme Numix
+	sudo apt install numix-gtk-theme
+	gsettings set org.gnome.desktop.interface gtk-theme Numix
 }
 
-if [ $# -eq 0 ]
-    then
-    echo "Please provide a target to install, use all to install everything"
-    exit 1
+if [ $# -eq 0 ]; then
+	echo "Please provide a target to install, use all to install everything"
+	exit 1
 fi
 
 main "$1"
