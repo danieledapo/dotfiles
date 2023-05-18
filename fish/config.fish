@@ -6,14 +6,13 @@
 # Environment
 #
 
-set -x EDITOR "nvim"
+set -x EDITOR nvim
 
 set -x PATH "$HOME/.local/bin" "$HOME/.cargo/bin" $PATH
 
 #
 # Autojump
 #
-
 if test -f /usr/share/autojump/autojump.fish
     source /usr/share/autojump/autojump.fish
 end
@@ -24,15 +23,11 @@ end
 eval (direnv hook fish)
 
 #
-# Byobu
+# zellij
 #
-
-# N.B. the terminal emulator should run the shell as the login shell in order to
-# have this check pass
-
-status is-login
-and status is-interactive
-and exec byobu-launcher
+if status is-interactive
+    eval (zellij setup --generate-auto-start fish | string collect)
+end
 
 #
 # Pyenv
