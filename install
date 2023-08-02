@@ -118,7 +118,7 @@ function install_vscode() {
 	sudo snap install code --classic
 
 	code \
-		--install-extension bungcip.better-toml \
+		--install-extension tamasfe.even-better-toml \
 		--install-extension lunaryorn.fish-ide \
 		--install-extension ms-python.python \
 		--install-extension rust-lang.rust \
