@@ -25,8 +25,9 @@ eval (direnv hook fish)
 #
 # zellij
 #
-if status is-interactive
-    eval (zellij setup --generate-auto-start fish | string collect)
+if set -q ZELLIJ
+else
+    zellij
 end
 
 #
@@ -43,3 +44,7 @@ end
 
 alias t thought
 alias o xdg-open
+
+# bun
+set --export BUN_INSTALL "$HOME/.bun"
+set --export PATH $BUN_INSTALL/bin $PATH
