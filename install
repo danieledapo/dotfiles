@@ -83,7 +83,7 @@ function install_fish() {
 	chmod +x /tmp/omf.fish
 	/tmp/omf.fish --noninteractive --yes
 
-	fish -c "omf install https://github.com/d-dorazio/theme-onigiri"
+	fish -c "omf install https://github.com/danieledapo/theme-onigiri"
 	fish -c "omf theme onigiri"
 
 	ln -s "$(pwd)/fish/functions/monthly-commits" ~/.config/fish/functions/monthly-commits.fish || true

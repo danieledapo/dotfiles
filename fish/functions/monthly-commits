@@ -20,7 +20,7 @@ function monthly-commits
     end
 
     set data (
-        http https://github-contributions-api.now.sh/v1/d-dorazio \
+        http https://github-contributions-api.now.sh/v1/danieledapo \
         | jq -r ".contributions | map(select(.date >= \"$first\" and .date <= \"$last\")) | reverse | .[].count"
     )
 
