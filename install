@@ -51,10 +51,12 @@ function main() {
 function install_common() {
 	echo "Installing common utilities..."
 	sudo apt update
-	sudo apt install -y autojump build-essential curl direnv fonts-firacode httpie git shellcheck jq tldr fd-find
+	sudo apt install -y build-essential curl direnv fonts-firacode httpie git shellcheck jq tldr fd-find
 
 	sudo snap install ripgrep --classic
 	sudo snap alias ripgrep.rg rg
+
+	curl -sS https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | bash
 
 	mkdir -p ~/.local/bin
 	curl -L https://github.com/zellij-org/zellij/releases/latest/download/zellij-x86_64-unknown-linux-musl.tar.gz --output /tmp/zellij.tar.gz
