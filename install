@@ -10,7 +10,6 @@ function main() {
 		install_vscode
 		install_python
 		install_rust
-		install_haskell
 		install_nvim
 		install_apps
 		install_ui
