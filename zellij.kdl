@@ -1,0 +1,3 @@
+copy_command "xclip -selection clipboard" // x11
+theme_dir "/home/daniele/tokyonight/extras/zellij/"
+theme "tokyonight_storm"
