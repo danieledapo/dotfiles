@@ -20,13 +20,13 @@ set -g __fish_git_prompt_color_untrackedfiles normal
 
 
 function fish_prompt
-    set -l symbol "λ "
+    set -l symbol " λ "
     set -l code $status
 
     set_color $fish_color_comment
     printf (prompt_pwd)
     set_color $fish_color_normal
-    printf (fish_git_prompt " %s ")
+    printf (fish_git_prompt " %s")
 
     if test "$code" != 0
         set_color red
@@ -34,8 +34,7 @@ function fish_prompt
     set_color $fish_color_comment
     printf "$symbol"
     set_color normal
-    echo " "
-
+    echo ""
 end
 
 
