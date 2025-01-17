@@ -155,6 +155,8 @@ function install_nvim() {
 
   ln -s "$(pwd)/nvim/lua/plugins/mason.lua" ~/.config/nvim/lua/plugins/mason.lua
   ln -s "$(pwd)/nvim/lua/plugins/nvim-treesitter.lua" ~/.config/nvim/lua/plugins/nvim-treesitter.lua
+  ln -sf "$(pwd)/nvim/lua/config/keymaps.lua" ~/.config/nvim/lua/config/keymaps.lua
+  ln -sf "$(pwd)/nvim/lua/config/options.lua" ~/.config/nvim/lua/config/options.lua
 
   nvim -c "Mason"
   nvim -c ':checkhealth'
