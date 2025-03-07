@@ -4,9 +4,12 @@
 
 [alias]
     # shorthands
+    b = "branch --show-current"
     c = "commit -m"
     ca = "commit --amend"
     st = "status"
+    pf = "push --force"
+    rh = "!git reset --hard origin/$(git b)"
 
     tree = "log --all --decorate --oneline --graph"
     aliases = "!git config --name-only --get-regexp alias | cut -d . -f 2"
