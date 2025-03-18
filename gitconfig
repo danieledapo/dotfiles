@@ -1,6 +1,6 @@
 [user]
-	email = d.dorazio96@gmail.com
-	name = Daniele D'Orazio
+    email = d.dorazio96@gmail.com
+    name = Daniele D'Orazio
 
 [alias]
     # shorthands
@@ -24,20 +24,20 @@
     delete-merged-branches = "!git branch --merged | grep -v '*' | xargs --no-run-if-empty git branch -d"
 
 [init]
-	defaultBranch = main
+    defaultBranch = main
 
 [branch]
-	sort = -committerdate
+    sort = -committerdate
 [tag]
-	sort = version:refname
+    sort = version:refname
 [diff]
-	algorithm = histogram
-	colorMoved = plain
-	mnemonicPrefix = true
-	renames = true
+    algorithm = histogram
+    colorMoved = plain
+    mnemonicPrefix = true
+    renames = true
 [push]
-	autoSetupRemote = true
-	followTags = true
+    autoSetupRemote = true
+    followTags = true
 [fetch]
-	prune = true
-	all = true
+    prune = true
+    all = true
