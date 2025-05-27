@@ -37,7 +37,7 @@
     renames = true
 [push]
     autoSetupRemote = true
-    followTags = true
+    ; followTags = true
 [fetch]
     prune = true
     all = true
