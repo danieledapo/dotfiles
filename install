@@ -12,11 +12,7 @@ function main() {
         install_python
         install_rust
         install_nvim
-        install_apps
         install_ui
-        ;;
-    apps)
-        install_apps
         ;;
     vscode)
         install_vscode
@@ -161,13 +157,6 @@ function install_nvim() {
 
     nvim -c "Mason"
     nvim -c ':checkhealth'
-}
-
-function install_apps() {
-    echo "Installing miscellaneous apps..."
-
-    sudo snap install slack --classic
-    sudo snap install bitwarden spotify
 }
 
 function install_ui() {
