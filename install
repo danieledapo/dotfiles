@@ -113,14 +113,6 @@ function install_vscode() {
 
     sudo snap install code --classic
 
-    code \
-        --install-extension tamasfe.even-better-toml \
-        --install-extension lunaryorn.fish-ide \
-        --install-extension ms-python.python \
-        --install-extension rust-lang.rust \
-        --install-extension stkb.rewrap \
-        --install-extension timonwong.shellcheck
-
     mkdir -p ~/.config/Code/User
     ln -s "$(pwd)/code/keybindings.json" ~/.config/Code/User/keybindings.json || true
     ln -s "$(pwd)/code/settings.json" ~/.config/Code/User/settings.json || true
