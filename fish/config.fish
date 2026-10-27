@@ -39,9 +39,4 @@ if test -d $HOME/.pyenv/bin
     pyenv init - | source
 end
 
-alias t thought
 alias o xdg-open
-
-# bun
-set --export BUN_INSTALL "$HOME/.bun"
-set --export PATH $BUN_INSTALL/bin $PATH
