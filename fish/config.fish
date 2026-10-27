@@ -21,14 +21,6 @@ zoxide init fish | source
 eval (direnv hook fish)
 
 #
-# zellij
-#
-if set -q ZELLIJ
-else
-    zellij
-end
-
-#
 # Pyenv
 #
 

@@ -50,29 +50,18 @@ function main() {
 function install_common() {
     echo "Installing common utilities..."
     sudo apt update
-    sudo apt install -y build-essential curl direnv fonts-firacode httpie git shellcheck jq tldr fd-find
-
-    sudo snap install ripgrep --classic
-    sudo snap alias ripgrep.rg rg
-    sudo snap install alacritty
+    sudo apt install -y build-essential curl direnv httpie git shellcheck jq tealdeer fd-find ripgrep fzf lazygit tree-sitter-cli fonts-jetbrains-mono ghostty
 
     curl -sS https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | bash
 
-    mkdir -p ~/.local/bin
-    curl -L https://github.com/zellij-org/zellij/releases/latest/download/zellij-x86_64-unknown-linux-musl.tar.gz --output /tmp/zellij.tar.gz
-    tar xf /tmp/zellij.tar.gz -C ~/.local/bin
-
-    mkdir -p ~/.config/zellij/
-    ln -s "$(pwd)/zellij.kdl" ~/.config/zellij/config.kdl || true
+    mkdir -p ~/.config/ghostty/
+    ln -s "$(pwd)/config.ghostty" ~/.config/ghostty/config.ghostty || true
 
     git clone https://github.com/folke/tokyonight.nvim ~/tokyonight
 
     ln -s "$(which fdfind)" ~/.local/bin/fd || true
 
     ln -s "$(pwd)/gitconfig" ~/.gitconfig || true
-
-    mkdir -p ~/.config/alacritty/
-    ln -s "$(pwd)/alacritty.toml" ~/.config/alacritty/alacritty.toml || true
 }
 
 function install_fish() {
@@ -130,7 +119,7 @@ function install_zed() {
 function install_nvim() {
     echo "Installing NeoVim..."
 
-    sudo snap install nvim
+    sudo snap install nvim --classic
 
     rm -rf ~/.config/nvim.bak
     mv ~/.config/nvim ~/.config/nvim.bak || true
