@@ -11,7 +11,6 @@ function main() {
         install_python
         install_rust
         install_nvim
-        install_ui
         ;;
     vscode)
         install_vscode
@@ -30,9 +29,6 @@ function main() {
         ;;
     rust)
         install_rust
-        ;;
-    ui)
-        install_ui
         ;;
     *)
         echo "unknown target to install"
@@ -125,13 +121,6 @@ function install_nvim() {
 
     nvim -c "Mason"
     nvim -c ':checkhealth'
-}
-
-function install_ui() {
-    echo "customizing ui..."
-
-    sudo apt install numix-gtk-theme
-    gsettings set org.gnome.desktop.interface gtk-theme Numix
 }
 
 if [ $# -eq 0 ]; then
