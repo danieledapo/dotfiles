@@ -8,7 +8,6 @@ function main() {
         install_common
         install_fish
         install_vscode
-        install_zed
         install_python
         install_rust
         install_nvim
@@ -16,9 +15,6 @@ function main() {
         ;;
     vscode)
         install_vscode
-        ;;
-    zed)
-        install_zed
         ;;
     common)
         install_common
@@ -105,15 +101,6 @@ function install_vscode() {
     mkdir -p ~/.config/Code/User
     ln -s "$(pwd)/code/keybindings.json" ~/.config/Code/User/keybindings.json || true
     ln -s "$(pwd)/code/settings.json" ~/.config/Code/User/settings.json || true
-}
-
-function install_zed() {
-    echo "Installing Zed..."
-
-    curl -f https://zed.dev/install.sh | sh
-
-    mkdir -p ~/.config/zed
-    ln -s "$(pwd)/zed/settings.json" ~/.config/zed/settings.json || true
 }
 
 function install_nvim() {
