@@ -2,8 +2,35 @@
 
 set -euo pipefail
 
+OS="$(uname -s)"
+
+function is_macos() {
+    [[ "$OS" == "Darwin" ]]
+}
+
+function is_linux() {
+    [[ "$OS" == "Linux" ]]
+}
+
+function ensure_brew() {
+    if ! is_macos; then
+        return 0
+    fi
+
+    if ! command -v brew >/dev/null 2>&1; then
+        echo "Homebrew not found. Installing Homebrew..."
+        /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    fi
+
+    if [[ -x "/opt/homebrew/bin/brew" ]]; then
+        eval "$(/opt/homebrew/bin/brew shellenv)"
+    elif [[ -x "/usr/local/bin/brew" ]]; then
+        eval "$(/usr/local/bin/brew shellenv)"
+    fi
+}
+
 function main() {
-    case $1 in
+    case "${1:-}" in
     all)
         install_common
         install_fish
@@ -41,77 +68,141 @@ function main() {
 
 function install_common() {
     echo "Installing common utilities..."
-    sudo apt update
-    sudo apt install -y build-essential curl direnv httpie git shellcheck jq tealdeer fd-find ripgrep fzf lazygit tree-sitter-cli fonts-jetbrains-mono ghostty
+
+    if is_macos; then
+        ensure_brew
+        if ! xcode-select -p >/dev/null 2>&1; then
+            xcode-select --install || true
+        fi
+        brew update
+        brew install curl direnv httpie git shellcheck jq tealdeer fd ripgrep fzf lazygit tree-sitter-cli
+        brew install --cask font-jetbrains-mono ghostty
+    elif is_linux; then
+        sudo apt update
+        sudo apt install -y build-essential curl direnv httpie git shellcheck jq tealdeer fd-find ripgrep fzf lazygit tree-sitter-cli fonts-jetbrains-mono ghostty
+        mkdir -p ~/.local/bin
+        ln -sf "$(command -v fdfind)" ~/.local/bin/fd || true
+    else
+        echo "Unsupported OS: $OS"
+        exit 1
+    fi
 
     curl -sS https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | bash
 
     mkdir -p ~/.config/ghostty/
-    ln -s "$(pwd)/config.ghostty" ~/.config/ghostty/config.ghostty || true
+    ln -sf "$(pwd)/config.ghostty" ~/.config/ghostty/config.ghostty || true
 
-    git clone https://github.com/folke/tokyonight.nvim ~/tokyonight
+    if [[ ! -d ~/tokyonight ]]; then
+        git clone https://github.com/folke/tokyonight.nvim ~/tokyonight
+    fi
 
-    ln -s "$(which fdfind)" ~/.local/bin/fd || true
-
-    ln -s "$(pwd)/gitconfig" ~/.gitconfig || true
+    ln -sf "$(pwd)/gitconfig" ~/.gitconfig || true
 }
 
 function install_fish() {
     echo "Installing and configuring the fish shell..."
 
-    sudo apt install -y fish
+    if is_macos; then
+        ensure_brew
+        brew install fish
+    elif is_linux; then
+        sudo apt update
+        sudo apt install -y fish
+    else
+        echo "Unsupported OS: $OS"
+        exit 1
+    fi
 
-    chsh -s /usr/bin/fish
+    local fish_path
+    fish_path="$(command -v fish)"
 
-    mkdir -p ~/.config/fish
-    ln -s "$(pwd)/fish/config.fish" ~/.config/fish/config.fish || true
-    ln -s "$(pwd)/fish/fish_prompt.fish" ~/.config/fish/functions/fish_prompt.fish || true
+    if ! grep -qx "$fish_path" /etc/shells 2>/dev/null; then
+        echo "$fish_path" | sudo tee -a /etc/shells >/dev/null
+    fi
+    chsh -s "$fish_path"
+
+    mkdir -p ~/.config/fish/functions
+    ln -sf "$(pwd)/fish/config.fish" ~/.config/fish/config.fish || true
+    ln -sf "$(pwd)/fish/fish_prompt.fish" ~/.config/fish/functions/fish_prompt.fish || true
 
     echo "You should logout to have the fish shell as the default"
-
 }
 
 function install_python() {
     echo "Installing python3..."
 
-    sudo apt install -y python3 ipython3
+    if is_macos; then
+        ensure_brew
+        brew install python ipython
+    elif is_linux; then
+        sudo apt update
+        sudo apt install -y python3 ipython3
+    else
+        echo "Unsupported OS: $OS"
+        exit 1
+    fi
+
     curl -LsSf https://astral.sh/uv/install.sh | sh
 }
 
 function install_rust() {
     echo "Installing rust..."
 
-    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+    if [[ -f "$HOME/.cargo/env" ]]; then
+        # shellcheck disable=SC1091
+        source "$HOME/.cargo/env"
+    fi
     rustup update
 }
 
 function install_vscode() {
     echo "Installing VSCode..."
 
-    sudo snap install code --classic
+    local user_config_dir
+    if is_macos; then
+        ensure_brew
+        brew install --cask visual-studio-code
+        user_config_dir="$HOME/Library/Application Support/Code/User"
+    elif is_linux; then
+        sudo snap install code --classic
+        user_config_dir="$HOME/.config/Code/User"
+    else
+        echo "Unsupported OS: $OS"
+        exit 1
+    fi
 
-    mkdir -p ~/.config/Code/User
-    ln -s "$(pwd)/code/keybindings.json" ~/.config/Code/User/keybindings.json || true
-    ln -s "$(pwd)/code/settings.json" ~/.config/Code/User/settings.json || true
+    mkdir -p "$user_config_dir"
+    ln -sf "$(pwd)/code/keybindings.json" "$user_config_dir/keybindings.json" || true
+    ln -sf "$(pwd)/code/settings.json" "$user_config_dir/settings.json" || true
 }
 
 function install_nvim() {
     echo "Installing NeoVim..."
 
-    sudo snap install nvim --classic
+    if is_macos; then
+        ensure_brew
+        brew install neovim
+    elif is_linux; then
+        sudo snap install nvim --classic
+    else
+        echo "Unsupported OS: $OS"
+        exit 1
+    fi
 
     rm -rf ~/.config/nvim.bak
-    mv ~/.config/nvim ~/.config/nvim.bak || true
-    mv ~/.local/share/nvim ~/.local/share/nvim.bak || true
-    mv ~/.local/state/nvim ~/.local/state/nvim.bak || true
-    mv ~/.cache/nvim ~/.cache/nvim.bak || true
+    mv ~/.config/nvim ~/.config/nvim.bak 2>/dev/null || true
+    mv ~/.local/share/nvim ~/.local/share/nvim.bak 2>/dev/null || true
+    mv ~/.local/state/nvim ~/.local/state/nvim.bak 2>/dev/null || true
+    mv ~/.cache/nvim ~/.cache/nvim.bak 2>/dev/null || true
 
     git clone https://github.com/LazyVim/starter ~/.config/nvim
     rm -rf ~/.config/nvim/.git
 
-    ln -s "$(pwd)/nvim/lua/plugins/mason.lua" ~/.config/nvim/lua/plugins/mason.lua
-    ln -s "$(pwd)/nvim/lua/plugins/nvim-treesitter.lua" ~/.config/nvim/lua/plugins/nvim-treesitter.lua
-    ln -s "$(pwd)/nvim/lua/plugins/snacks.lua" ~/.config/nvim/lua/plugins/snacks.lua
+    mkdir -p ~/.config/nvim/lua/plugins ~/.config/nvim/lua/config
+    ln -sf "$(pwd)/nvim/lua/plugins/mason.lua" ~/.config/nvim/lua/plugins/mason.lua
+    ln -sf "$(pwd)/nvim/lua/plugins/nvim-treesitter.lua" ~/.config/nvim/lua/plugins/nvim-treesitter.lua
+    ln -sf "$(pwd)/nvim/lua/plugins/snacks.lua" ~/.config/nvim/lua/plugins/snacks.lua
     ln -sf "$(pwd)/nvim/lua/config/keymaps.lua" ~/.config/nvim/lua/config/keymaps.lua
     ln -sf "$(pwd)/nvim/lua/config/options.lua" ~/.config/nvim/lua/config/options.lua
 

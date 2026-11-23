@@ -18,17 +18,10 @@ zoxide init fish | source
 #
 # Direnv
 #
-eval (direnv hook fish)
+direnv hook fish | source
 
-#
-# Pyenv
-#
-
-if test -d $HOME/.pyenv/bin
-    set -x PYENV_ROOT "$HOME/.pyenv"
-    set -x PATH "$PYENV_ROOT/bin" $PATH
-
-    pyenv init - | source
+if test (uname) = Darwin
+    alias o open
+else
+    alias o xdg-open
 end
-
-alias o xdg-open
